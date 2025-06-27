@@ -1,1021 +1,875 @@
 <!DOCTYPE html>
-
-<html lang="hi"><head><meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Chess Guide - शतरंज गाइड</title>
-
-<style>
-
-    * {
-
-        margin: 0;
-
-        padding: 0;
-
-        box-sizing: border-box;
-
-    }
-
-
-
-    body {
-
-        font-family: 'Georgia', serif;
-
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-        color: #333;
-
-        line-height: 1.6;
-
-    }
-
-
-
-    .container {
-
-        max-width: 1200px;
-
-        margin: 0 auto;
-
-        padding: 20px;
-
-    }
-
-
-
-    header {
-
-        text-align: center;
-
-        background: rgba(255, 255, 255, 0.95);
-
-        border-radius: 20px;
-
-        padding: 40px;
-
-        margin-bottom: 40px;
-
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-
-        backdrop-filter: blur(10px);
-
-    }
-
-
-
-    h1 {
-
-        font-size: 3.5em;
-
-        background: linear-gradient(45deg, #8B4513, #D2691E);
-
-        -webkit-background-clip: text;
-
-        -webkit-text-fill-color: transparent;
-
-        background-clip: text;
-
-        margin-bottom: 10px;
-
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-
-    }
-
-
-
-    .subtitle {
-
-        font-size: 1.5em;
-
-        color: #666;
-
-        font-style: italic;
-
-    }
-
-
-
-    .nav-tabs {
-
-        display: flex;
-
-        justify-content: center;
-
-        margin-bottom: 40px;
-
-        background: rgba(255, 255, 255, 0.9);
-
-        border-radius: 15px;
-
-        padding: 10px;
-
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-
-    }
-
-
-
-    .tab-btn {
-
-        padding: 15px 30px;
-
-        margin: 0 10px;
-
-        border: none;
-
-        background: linear-gradient(45deg, #8B4513, #D2691E);
-
-        color: white;
-
-        border-radius: 10px;
-
-        cursor: pointer;
-
-        font-size: 1.1em;
-
-        font-weight: bold;
-
-        transition: all 0.3s ease;
-
-        text-transform: uppercase;
-
-        letter-spacing: 1px;
-
-    }
-
-
-
-    .tab-btn:hover {
-
-        transform: translateY(-3px);
-
-        box-shadow: 0 10px 20px rgba(139, 69, 19, 0.3);
-
-    }
-
-
-
-    .tab-btn.active {
-
-        background: linear-gradient(45deg, #D2691E, #8B4513);
-
-        transform: translateY(-2px);
-
-        box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
-
-    }
-
-
-
-    .tab-content {
-
-        display: none;
-
-        background: rgba(255, 255, 255, 0.95);
-
-        border-radius: 20px;
-
-        padding: 40px;
-
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-
-        backdrop-filter: blur(10px);
-
-    }
-
-
-
-    .tab-content.active {
-
-        display: block;
-
-        animation: fadeInUp 0.6s ease;
-
-    }
-
-
-
-    @keyframes fadeInUp {
-
-        from {
-
-            opacity: 0;
-
-            transform: translateY(30px);
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Master Guide</title>
+    <style>
+        /* CSS provided in the previous turn */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        to {
-
-            opacity: 1;
-
-            transform: translateY(0);
-
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
         }
 
-    }
-
-
-
-    .pieces-grid {
-
-        display: grid;
-
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-
-        gap: 30px;
-
-        margin-top: 30px;
-
-    }
-
-
-
-    .piece-card {
-
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-
-        border-radius: 15px;
-
-        padding: 25px;
-
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-
-        transition: all 0.3s ease;
-
-        border: 2px solid transparent;
-
-    }
-
-
-
-    .piece-card:hover {
-
-        transform: translateY(-8px);
-
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-
-        border-color: #8B4513;
-
-    }
-
-
-
-    .piece-header {
-
-        display: flex;
-
-        align-items: center;
-
-        margin-bottom: 20px;
-
-    }
-
-
-
-    .piece-symbol {
-
-        font-size: 4em;
-
-        margin-right: 20px;
-
-        filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.2));
-
-    }
-
-
-
-    .piece-title {
-
-        font-size: 2em;
-
-        color: #8B4513;
-
-        font-weight: bold;
-
-    }
-
-
-
-    .piece-info {
-
-        font-size: 1.1em;
-
-        color: #555;
-
-        line-height: 1.8;
-
-    }
-
-
-
-    .openings-grid {
-
-        display: grid;
-
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-
-        gap: 30px;
-
-        margin-top: 30px;
-
-    }
-
-
-
-    .opening-card {
-
-        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-
-        border-radius: 15px;
-
-        padding: 25px;
-
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-
-        transition: all 0.3s ease;
-
-        border: 2px solid transparent;
-
-    }
-
-
-
-    .opening-card:hover {
-
-        transform: translateY(-5px);
-
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-
-        border-color: #D2691E;
-
-    }
-
-
-
-    .opening-title {
-
-        font-size: 1.8em;
-
-        color: #8B4513;
-
-        margin-bottom: 15px;
-
-        font-weight: bold;
-
-        border-bottom: 3px solid #D2691E;
-
-        padding-bottom: 10px;
-
-    }
-
-
-
-    .opening-moves {
-
-        background: rgba(255, 255, 255, 0.8);
-
-        padding: 15px;
-
-        border-radius: 10px;
-
-        margin: 15px 0;
-
-        font-family: 'Courier New', monospace;
-
-        font-size: 1.1em;
-
-        border-left: 4px solid #8B4513;
-
-    }
-
-
-
-    .opening-description {
-
-        font-size: 1.1em;
-
-        color: #555;
-
-        line-height: 1.7;
-
-    }
-
-
-
-    .section-title {
-
-        font-size: 2.5em;
-
-        text-align: center;
-
-        margin-bottom: 30px;
-
-        color: #8B4513;
-
-        font-weight: bold;
-
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-
-    }
-
-
-
-    .highlight {
-
-        background: linear-gradient(120deg, #ffeaa7, #fdcb6e);
-
-        padding: 2px 6px;
-
-        border-radius: 4px;
-
-        font-weight: bold;
-
-    }
-
-
-
-    @media (max-width: 768px) {
-
-        .container { padding: 10px; }
-
-        h1 { font-size: 2.5em; }
-
-        .nav-tabs { flex-direction: column; }
-
-        .tab-btn { margin: 5px 0; }
-
-        .pieces-grid, .openings-grid { 
-
-            grid-template-columns: 1fr; 
-
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-    }
-
-</style>
-
-</head><body><div class="container">
-
-    <header>
-
-        <h1>♔ Chess Master Guide ♕</h1>
-
-        <p class="subtitle">Complete Chess Knowledge & Strategy Guide</p>
-
-    </header>
-
-
-
-    <div class="nav-tabs">
-
-        <button class="tab-btn active" onclick="showTab('pieces')">Chess Pieces</button>
-
-        <button class="tab-btn" onclick="showTab('openings')">Opening Strategies</button>
-
-    </div>
-
-
-
-    <div id="pieces" class="tab-content active">
-
-        <h2 class="section-title">♟️ Chess Pieces Guide</h2>
-
-        
-
-        <div class="pieces-grid">
-
-            <div class="piece-card">
-
-                <div class="piece-header">
-
-                    <span class="piece-symbol">♔</span>
-
-                    <h3 class="piece-title">King</h3>
-
-                </div>
-
-                <div class="piece-info">
-
-                    <p><strong>Movement:</strong> One square in any direction (horizontal, vertical, diagonal)</p>
-
-                    <p><strong>Value:</strong> Invaluable - Most important piece in the game</p>
-
-                    <p><strong>Special:</strong> <span class="highlight">Castling</span> ability. Must escape when in check.</p>
-
-                    <p><strong>Strategy:</strong> Keep safe in opening/middlegame, activate in endgame.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="piece-card">
-
-                <div class="piece-header">
-
-                    <span class="piece-symbol">♕</span>
-
-                    <h3 class="piece-title">Queen</h3>
-
-                </div>
-
-                <div class="piece-info">
-
-                    <p><strong>Movement:</strong> Any direction, unlimited squares (combines Rook + Bishop power)</p>
-
-                    <p><strong>Value:</strong> 9 points - Most powerful piece</p>
-
-                    <p><strong>Special:</strong> Long-range attacks, can control entire board sections</p>
-
-                    <p><strong>Strategy:</strong> Don't develop too early, use for center control and coordination.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="piece-card">
-
-                <div class="piece-header">
-
-                    <span class="piece-symbol">♖</span>
-
-                    <h3 class="piece-title">Rook</h3>
-
-                </div>
-
-                <div class="piece-info">
-
-                    <p><strong>Movement:</strong> Straight lines only (horizontal/vertical), unlimited squares</p>
-
-                    <p><strong>Value:</strong> 5 points</p>
-
-                    <p><strong>Special:</strong> Participates in <span class="highlight">Castling</span></p>
-
-                    <p><strong>Strategy:</strong> Place on open files, 7th rank is extremely powerful.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="piece-card">
-
-                <div class="piece-header">
-
-                    <span class="piece-symbol">♗</span>
-
-                    <h3 class="piece-title">Bishop</h3>
-
-                </div>
-
-                <div class="piece-info">
-
-                    <p><strong>Movement:</strong> Diagonal lines only, unlimited squares</p>
-
-                    <p><strong>Value:</strong> 3 points</p>
-
-                    <p><strong>Special:</strong> Always stays on same colored squares</p>
-
-                    <p><strong>Strategy:</strong> Powerful on long diagonals, target opponent's pawn chains.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="piece-card">
-
-                <div class="piece-header">
-
-                    <span class="piece-symbol">♘</span>
-
-                    <h3 class="piece-title">Knight</h3>
-
-                </div>
-
-                <div class="piece-info">
-
-                    <p><strong>Movement:</strong> 'L' shaped moves (2+1 or 1+2 squares)</p>
-
-                    <p><strong>Value:</strong> 3 points</p>
-
-                    <p><strong>Special:</strong> <span class="highlight">Only piece that can jump over others</span></p>
-
-                    <p><strong>Strategy:</strong> Extremely powerful on central squares, excellent for forks and tactics.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="piece-card">
-
-                <div class="piece-header">
-
-                    <span class="piece-symbol">♙</span>
-
-                    <h3 class="piece-title">Pawn</h3>
-
-                </div>
-
-                <div class="piece-info">
-
-                    <p><strong>Movement:</strong> Forward one square (two squares on first move)</p>
-
-                    <p><strong>Value:</strong> 1 point</p>
-
-                    <p><strong>Special:</strong> <span class="highlight">En passant capture, Promotion</span> (can become Queen)</p>
-
-                    <p><strong>Strategy:</strong> Form strong pawn structures, control center, crucial in endgames.</p>
-
-                </div>
-
-            </div>
-
+        header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            background: linear-gradient(45deg, #8B4513, #D2691E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #666;
+            font-style: italic;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            margin: 0 10px;
+            border: none;
+            background: linear-gradient(45deg, #8B4513, #D2691E);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 69, 19, 0.3);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #D2691E, #8B4513);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        }
+
+        .language-toggle {
+            padding: 15px 25px;
+            margin: 0 10px;
+            border: none;
+            background: linear-gradient(45deg, #2d3748, #4a5568);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(45, 55, 72, 0.3);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px 20px;
+            border: 3px solid #8B4513;
+            border-radius: 25px;
+            font-size: 1.1em;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(139, 69, 19, 0.3);
+            transform: scale(1.05);
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(10px);
+        }
+
+        .quiz-option.selected {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: white;
+        }
+
+        .quiz-option.correct {
+            background: #48bb78;
+            border-color: #38a169;
+        }
+
+        .quiz-option.incorrect {
+            background: #f56565;
+            border-color: #e53e3e;
+        }
+
+        .quiz-score {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: #8B4513;
+            margin: 30px 0;
+        }
+
+        .quiz-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #8B4513, #D2691E);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 69, 19, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pieces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .piece-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .piece-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-color: #8B4513;
+        }
+
+        .piece-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .piece-symbol {
+            font-size: 4em;
+            margin-right: 20px;
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.2));
+        }
+
+        .piece-title {
+            font-size: 2em;
+            color: #8B4513;
+            font-weight: bold;
+        }
+
+        .piece-info {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .openings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .opening-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .opening-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #D2691E;
+        }
+
+        .opening-title {
+            font-size: 1.8em;
+            color: #8B4513;
+            margin-bottom: 15px;
+            font-weight: bold;
+            border-bottom: 3px solid #D2691E;
+            padding-bottom: 10px;
+        }
+
+        .opening-moves {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            border-left: 4px solid #8B4513;
+        }
+
+        .opening-description {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #8B4513;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7, #fdcb6e);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            h1 { font-size: 2.5em; }
+            .nav-tabs { flex-direction: column; }
+            .tab-btn { margin: 5px 0; }
+            .pieces-grid, .openings-grid { 
+                grid-template-columns: 1fr; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="mainTitle">♔ Chess Master Guide ♕</h1>
+            <p class="subtitle" id="subTitle">Complete Chess Knowledge & Strategy Guide</p>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('pieces')" id="tabBtnPieces">Chess Pieces</button>
+            <button class="tab-btn" onclick="showTab('openings')" id="tabBtnOpenings">Opening Strategies</button>
+            <button class="tab-btn" onclick="showTab('quiz')" id="tabBtnQuiz">Chess Quiz</button>
+            <button class="language-toggle" onclick="toggleLanguage()" id="languageToggle">🌐 हिंदी</button>
         </div>
 
-    </div>
-
-
-
-    <div id="openings" class="tab-content">
-
-        <h2 class="section-title">🎯 Chess Opening Strategies</h2>
-
-        
-
-        <div class="openings-grid">
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">Italian Game</h3>
-
-                <div class="opening-moves">
-
-                    1. e4 e5<br>
-
-                    2. Nf3 Nc6<br>
-
-                    3. Bc4 Bc5
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> Classical Opening</p>
-
-                    <p><strong>Idea:</strong> Quick development on the kingside with center control. Bishop targets the f7 square for potential attacks.</p>
-
-                    <p><strong>Benefits:</strong> Fast castling, aggressive play possibilities, excellent for beginners to learn fundamental principles.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">Ruy Lopez (Spanish Opening)</h3>
-
-                <div class="opening-moves">
-
-                    1. e4 e5<br>
-
-                    2. Nf3 Nc6<br>
-
-                    3. Bb5
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> Classical Opening</p>
-
-                    <p><strong>Idea:</strong> Pin the knight and create indirect pressure. Features very deep theoretical knowledge.</p>
-
-                    <p><strong>Benefits:</strong> Long-term positional advantages, sustained pressure, preferred by professional players.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">Queen's Gambit</h3>
-
-                <div class="opening-moves">
-
-                    1. d4 d5<br>
-
-                    2. c4
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> Queen's Pawn Opening</p>
-
-                    <p><strong>Idea:</strong> Gain central control and develop queenside pieces with strategic depth.</p>
-
-                    <p><strong>Benefits:</strong> Strong center control, queenside initiative, rich strategic complexity.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">Sicilian Defense</h3>
-
-                <div class="opening-moves">
-
-                    1. e4 c5
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> Asymmetrical Defense</p>
-
-                    <p><strong>Idea:</strong> Control the center while creating queenside counterplay opportunities.</p>
-
-                    <p><strong>Benefits:</strong> Fighting chances for Black, complex positions, excellent winning opportunities.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">French Defense</h3>
-
-                <div class="opening-moves">
-
-                    1. e4 e6<br>
-
-                    2. d4 d5
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> Solid Defense</p>
-
-                    <p><strong>Idea:</strong> Build solid pawn structure and strategic play with central counter-strikes.</p>
-
-                    <p><strong>Benefits:</strong> Safe king position, clear strategic plans, excellent for defensive players.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">King's Indian Defense</h3>
-
-                <div class="opening-moves">
-
-                    1. d4 Nf6<br>
-
-                    2. c4 g6<br>
-
-                    3. Nc3 Bg7
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> Hypermodern Defense</p>
-
-                    <p><strong>Idea:</strong> Allow opponent center control, then attack it with pieces and pawns later.</p>
-
-                    <p><strong>Benefits:</strong> Dynamic kingside attacks, flexible pawn structure, exciting tactical possibilities.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">English Opening</h3>
-
-                <div class="opening-moves">
-
-                    1. c4
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> Flank Opening</p>
-
-                    <p><strong>Idea:</strong> Control center from the side, flexible development patterns.</p>
-
-                    <p><strong>Benefits:</strong> Transpositional possibilities, avoids main theory, positional richness.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">Caro-Kann Defense</h3>
-
-                <div class="opening-moves">
-
-                    1. e4 c6<br>
-
-                    2. d4 d5
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> Solid Defense</p>
-
-                    <p><strong>Idea:</strong> Solid structure while maintaining bishop development options.</p>
-
-                    <p><strong>Benefits:</strong> Less cramped than French Defense, good piece coordination, reliable structure.</p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="opening-card">
-
-                <h3 class="opening-title">London System</h3>
-
-                <div class="opening-moves">
-
-                    1. d4 d5<br>
-
-                    2. Bf4 Nf6<br>
-
-                    3. e3 e6<br>
-
-                    4. Nd2
-
-                </div>
-
-                <div class="opening-description">
-
-                    <p><strong>Type:</strong> System Opening</p>
-
-                    <p><strong>Idea:</strong> Consistent setup regardless of Black's response, easy development.</p>
-
-                    <p><strong>Benefits:</strong> Low maintenance theory, solid structure, good for improving pattern recognition.</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div style="margin-top: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; text-align: center;">
-
-            <h3 style="font-size: 2em; margin-bottom: 20px;">🏆 Opening Principles</h3>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
-
-                <div>
-
-                    <h4>🎯 Control the Center</h4>
-
-                    <p>Occupy or influence central squares (e4, e5, d4, d5) with pawns and pieces</p>
-
-                </div>
-
-                <div>
-
-                    <h4>⚡ Develop Quickly</h4>
-
-                    <p>Bring knights and bishops into active positions before moving the same piece twice</p>
-
-                </div>
-
-                <div>
-
-                    <h4>🏰 King Safety</h4>
-
-                    <p>Castle early to protect your king and connect your rooks</p>
-
-                </div>
-
-                <div>
-
-                    <h4>🚫 Don't Move Pawns Excessively</h4>
-
-                    <p>Each pawn move should serve a clear purpose - don't weaken your position</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<script>
-
-    function showTab(tabName) {
-
-        // Hide all tab contents
-
-        const contents = document.querySelectorAll('.tab-content');
-
-        contents.forEach(content => {
-
-            content.classList.remove('active');
-
-        });
-
-
-
-        // Remove active class from all buttons
-
-        const buttons = document.querySelectorAll('.tab-btn');
-
-        buttons.forEach(button => {
-
-            button.classList.remove('active');
-
-        });
-
-
-
-        // Show selected tab content
-
-        document.getElementById(tabName).classList.add('active');
-
-
-
-        // Add active class to clicked button
-
-        event.target.classList.add('active');
-
-    }
-
-
-
-    // Add smooth scrolling and hover effects
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-        const cards = document.querySelectorAll('.piece-card, .opening-card');
-
-        
-
-        cards.forEach(card => {
-
-            card.addEventListener('mouseenter', function() {
-
-                this.style.transform = 'translateY(-8px) scale(1.02)';
-
-            });
-
+        <div id="pieces" class="tab-content active">
+            <h2 class="section-title" id="piecesSectionTitle">♟️ Chess Pieces Guide</h2>
             
+            <div class="pieces-grid" id="piecesGrid">
+                </div>
+        </div>
 
-            card.addEventListener('mouseleave', function() {
+        <div id="openings" class="tab-content">
+            <h2 class="section-title" id="openingsSectionTitle">🎯 Chess Opening Strategies</h2>
+            
+            <div class="search-container">
+                <input type="text" class="search-box" id="openingSearch" placeholder="🔍 Search chess openings..." onkeyup="filterOpenings()">
+            </div>
+            
+            <div class="openings-grid" id="openingsGridContent">
+                </div>
+        </div>
 
-                this.style.transform = 'translateY(0) scale(1)';
+        <div id="quiz" class="tab-content">
+            <h2 class="section-title" id="quizSectionTitle">🧠 Chess Knowledge Quiz</h2>
+            
+            <div class="quiz-container">
+                <div id="quizContent">
+                    </div>
+                
+                <div class="quiz-score" id="quizScore" style="display: none;">
+                    Score: <span id="scoreValue">0</span>/5
+                </div>
+                
+                <button class="quiz-btn" onclick="startQuiz()" id="startQuizBtn">Start Quiz</button>
+                <button class="quiz-btn" onclick="restartQuiz()" style="display: none;" id="restartBtn">Try Again</button>
+            </div>
+        </div>
+    </div>
 
-            });
+    <script>
+        // Language data
+        const translations = {
+            en: {
+                title: "♔ Chess Master Guide ♕",
+                subtitle: "Complete Chess Knowledge & Strategy Guide",
+                tabPieces: "Chess Pieces",
+                tabOpenings: "Opening Strategies",
+                tabQuiz: "Chess Quiz",
+                piecesTitle: "♟️ Chess Pieces Guide",
+                openingsTitle: "🎯 Chess Opening Strategies",
+                quizTitle: "🧠 Chess Knowledge Quiz",
+                searchPlaceholder: "🔍 Search chess openings...",
+                startQuizBtn: "Start Quiz",
+                restartQuizBtn: "Try Again",
+                scoreText: "Score:",
+                // Pieces data
+                pieces: {
+                    king: {
+                        title: "King",
+                        movement: "One square in any direction (horizontal, vertical, diagonal)",
+                        value: "Invaluable - Most important piece in the game",
+                        special: "Castling ability. Must escape when in check.",
+                        strategy: "Keep safe in opening/middlegame, activate in endgame."
+                    },
+                    queen: {
+                        title: "Queen",
+                        movement: "Any direction, unlimited squares (combines Rook + Bishop power)",
+                        value: "9 points - Most powerful piece",
+                        special: "Long-range attacks, can control entire board sections",
+                        strategy: "Don't develop too early, use for center control and coordination."
+                    },
+                    rook: {
+                        title: "Rook",
+                        movement: "Straight lines only (horizontal/vertical), unlimited squares",
+                        value: "5 points",
+                        special: "Participates in Castling",
+                        strategy: "Place on open files, 7th rank is extremely powerful."
+                    },
+                    bishop: {
+                        title: "Bishop",
+                        movement: "Diagonal lines only, unlimited squares",
+                        value: "3 points",
+                        special: "Always stays on same colored squares",
+                        strategy: "Powerful on long diagonals, target opponent's pawn chains."
+                    },
+                    knight: {
+                        title: "Knight",
+                        movement: "'L' shaped moves (2+1 or 1+2 squares)",
+                        value: "3 points",
+                        special: "Only piece that can jump over others",
+                        strategy: "Extremely powerful on central squares, excellent for forks and tactics."
+                    },
+                    pawn: {
+                        title: "Pawn",
+                        movement: "Forward one square (two squares on first move)",
+                        value: "1 point",
+                        special: "En passant capture, Promotion (can become Queen)",
+                        strategy: "Form strong pawn structures, control center, crucial in endgames."
+                    }
+                }
+            },
+            hi: {
+                title: "♔ शतरंज मास्टर गाइड ♕",
+                subtitle: "शतरंज की संपूर्ण जानकारी और रणनीति गाइड",
+                tabPieces: "शतरंज के मोहरे",
+                tabOpenings: "शुरुआती रणनीतियां",
+                tabQuiz: "शतरंज प्रश्नोत्तरी",
+                piecesTitle: "♟️ शतरंज के मोहरे गाइड",
+                openingsTitle: "🎯 शतरंज की शुरुआती रणनीतियां",
+                quizTitle: "🧠 शतरंज ज्ञान प्रश्नोत्तरी",
+                searchPlaceholder: "🔍 शतरंज की शुरुआती चालें खोजें...",
+                startQuizBtn: "प्रश्नोत्तरी शुरू करें",
+                restartQuizBtn: "पुनः प्रयास करें",
+                scoreText: "स्कोर:",
+                pieces: {
+                    king: {
+                        title: "राजा",
+                        movement: "किसी भी दिशा में एक वर्ग (आगे, पीछे, बाजू, तिरछे)",
+                        value: "अनमोल - खेल का सबसे महत्वपूर्ण मोहरा",
+                        special: "कैसलिंग की क्षमता। शह में आने पर बचना जरूरी।",
+                        strategy: "शुरुआत/मध्य खेल में सुरक्षित रखें, अंतिम खेल में सक्रिय करें।"
+                    },
+                    queen: {
+                        title: "रानी",
+                        movement: "किसी भी दिशा में असीम वर्ग (हाथी + ऊंट की शक्ति)",
+                        value: "9 अंक - सबसे शक्तिशाली मोहरा",
+                        special: "लंबी दूरी के हमले, पूरे बोर्ड को नियंत्रित कर सकती है",
+                        strategy: "जल्दी विकसित न करें, केंद्र नियंत्रण और समन्वय के लिए उपयोग करें।"
+                    },
+                    rook: {
+                        title: "हाथी",
+                        movement: "केवल सीधी लाइनें (क्षैतिज/लंबवत), असीम वर्ग",
+                        value: "5 अंक",
+                        special: "कैसलिंग में भाग लेता है",
+                        strategy: "खुली फाइलों पर रखें, 7वीं पंक्ति अत्यंत शक्तिशाली है।"
+                    },
+                    bishop: {
+                        title: "ऊंट",
+                        movement: "केवल तिरछी लाइनें, असीम वर्ग",
+                        value: "3 अंक",
+                        special: "हमेशा समान रंगीन वर्गों पर रहता है",
+                        strategy: "लंबे विकर्णों पर शक्तिशाली, प्रतिद्वंद्वी की मोहरा शृंखला को लक्षित करें।"
+                    },
+                    knight: {
+                        title: "घोड़ा",
+                        movement: "'L' आकार की चालें (2+1 या 1+2 वर्ग)",
+                        value: "3 अंक",
+                        special: "एकमात्र मोहरा जो दूसरों के ऊपर से कूद सकता है",
+                        strategy: "केंद्रीय वर्गों पर अत्यंत शक्तिशाली, कांटे और युक्तियों के लिए उत्कृष्ट।"
+                    },
+                    pawn: {
+                        title: "प्यादा",
+                        movement: "आगे एक वर्ग (पहली चाल में दो वर्ग)",
+                        value: "1 अंक",
+                        special: "एन पासेंट कैप्चर, प्रमोशन (रानी बन सकता है)",
+                        strategy: "मजबूत मोहरा संरचना बनाएं, केंद्र नियंत्रण करें, अंतिम खेल में महत्वपूर्ण।"
+                    }
+                }
+            }
+        };
 
+        // Quiz data
+        const quizQuestions = [
+            {
+                question: "Which piece can jump over other pieces?",
+                options: ["Queen", "Knight", "Bishop", "Rook"],
+                correct: 1,
+                questionHi: "कौन सा मोहरा दूसरे मोहरों के ऊपर से कूद सकता है?",
+                optionsHi: ["रानी", "घोड़ा", "ऊंट", "हाथी"]
+            },
+            {
+                question: "How many points is a Queen worth?",
+                options: ["5 points", "8 points", "9 points", "10 points"],
+                correct: 2,
+                questionHi: "रानी कितने अंक की होती है?",
+                optionsHi: ["5 अंक", "8 अंक", "9 अंक", "10 अंक"]
+            },
+            {
+                question: "Which opening starts with 1.e4 e5 2.Nf3 Nc6 3.Bc4?",
+                options: ["Ruy Lopez", "Italian Game", "Queen's Gambit", "Sicilian Defense"],
+                correct: 1,
+                questionHi: "कौन सी शुरुआत 1.e4 e5 2.Nf3 Nc6 3.Bc4 से होती है?",
+                optionsHi: ["रूय लोपेज़", "इतालवी खेल", "क्वीन्स गैम्बिट", "सिसिलियन डिफेंस"]
+            },
+            {
+                question: "What special move can a pawn make when reaching the opposite end?",
+                options: ["Castling", "En passant", "Promotion", "Fork"],
+                correct: 2,
+                questionHi: "जब प्यादा विपरीत छोर तक पहुंचता है तो वह कौन सी विशेष चाल कर सकता है?",
+                optionsHi: ["कैसलिंग", "एन पासेंट", "प्रमोशन", "फोर्क"]
+            },
+            {
+                question: "Which piece is worth 5 points?",
+                options: ["Bishop", "Knight", "Rook", "Queen"],
+                correct: 2,
+                questionHi: "कौन सा मोहरा 5 अंक का होता है?",
+                optionsHi: ["ऊंट", "घोड़ा", "हाथी", "रानी"]
+            }
+        ];
+
+        // Opening data
+        const openingsData = [
+            {
+                title: "Italian Game",
+                moves: "1. e4 e5<br>2. Nf3 Nc6<br>3. Bc4 Bc5",
+                type: "Classical Opening",
+                idea: "Quick development on the kingside with center control. Bishop targets the f7 square for potential attacks.",
+                benefits: "Fast castling, aggressive play possibilities, excellent for beginners to learn fundamental principles.",
+                titleHi: "इतालवी खेल",
+                typeHi: "क्लासिकल ओपनिंग",
+                ideaHi: "किंगसाइड पर त्वरित विकास के साथ केंद्र नियंत्रण। बिशप f7 वर्ग को संभावित हमलों के लिए लक्षित करता है।",
+                benefitsHi: "तेज़ कैसलिंग, आक्रामक खेल की संभावनाएं, शुरुआती सिद्धांत सीखने के लिए शुरुआती लोगों के लिए उत्कृष्ट।"
+            },
+            {
+                title: "Ruy Lopez (Spanish Opening)",
+                moves: "1. e4 e5<br>2. Nf3 Nc6<br>3. Bb5",
+                type: "Classical Opening",
+                idea: "Pin the knight and create indirect pressure. Features very deep theoretical knowledge.",
+                benefits: "Long-term positional advantages, sustained pressure, preferred by professional players.",
+                titleHi: "रूय लोपेज़ (स्पैनिश ओपनिंग)",
+                typeHi: "क्लासिकल ओपनिंग",
+                ideaHi: "नाइट को पिन करें और अप्रत्यक्ष दबाव बनाएं। बहुत गहरे सैद्धांतिक ज्ञान की सुविधा।",
+                benefitsHi: "दीर्घकालिक स्थितिगत फायदे, निरंतर दबाव, पेशेवर खिलाड़ियों द्वारा पसंद किया जाता है।"
+            },
+            {
+                title: "Queen's Gambit",
+                moves: "1. d4 d5<br>2. c4",
+                type: "Queen's Pawn Opening",
+                idea: "Gain central control and develop queenside pieces with strategic depth.",
+                benefits: "Strong center control, queenside initiative, rich strategic complexity.",
+                titleHi: "क्वीन्स गैम्बिट",
+                typeHi: "क्वीन पॉन ओपनिंग",
+                ideaHi: "केंद्रीय नियंत्रण प्राप्त करें और रणनीतिक गहराई के साथ क्वीनसाइड के टुकड़े विकसित करें।",
+                benefitsHi: "मजबूत केंद्र नियंत्रण, क्वीनसाइड पहल, समृद्ध रणनीतिक जटिलता।"
+            },
+            {
+                title: "Sicilian Defense",
+                moves: "1. e4 c5",
+                type: "Asymmetrical Defense",
+                idea: "Control the center while creating queenside counterplay opportunities.",
+                benefits: "Fighting chances for Black, complex positions, excellent winning opportunities.",
+                titleHi: "सिसिलियन डिफेंस",
+                typeHi: "असममित रक्षा",
+                ideaHi: "क्वीनसाइड काउंटरप्ले के अवसर बनाते हुए केंद्र को नियंत्रित करें।",
+                benefitsHi: "ब्लैक के लिए लड़ने के अवसर, जटिल स्थितियां, उत्कृष्ट जीतने के अवसर।"
+            },
+            {
+                title: "French Defense",
+                moves: "1. e4 e6<br>2. d4 d5",
+                type: "Solid Defense",
+                idea: "Build solid pawn structure and strategic play with central counter-strikes.",
+                benefits: "Safe king position, clear strategic plans, excellent for defensive players.",
+                titleHi: "फ्रेंच डिफेंस",
+                typeHi: "ठोस रक्षा",
+                ideaHi: "केंद्रीय काउंटर-स्ट्राइक के साथ ठोस पॉन संरचना और रणनीतिक खेल का निर्माण करें।",
+                benefitsHi: "सुरक्षित राजा की स्थिति, स्पष्ट रणनीतिक योजनाएं, रक्षात्मक खिलाड़ियों के लिए उत्कृष्ट।"
+            },
+            {
+                title: "King's Indian Defense",
+                moves: "1. d4 Nf6<br>2. c4 g6<br>3. Nc3 Bg7",
+                type: "Hypermodern Defense",
+                idea: "Allow opponent center control, then attack it with pieces and pawns later.",
+                benefits: "Dynamic kingside attacks, flexible pawn structure, exciting tactical possibilities.",
+                titleHi: "किंग्स इंडियन डिफेंस",
+                typeHi: "हाइपरमॉडर्न डिफेंस",
+                ideaHi: "विरोधी को केंद्र नियंत्रण करने दें, फिर बाद में मोहरों और प्यादों से हमला करें।",
+                benefitsHi: "गतिशील किंगसाइड हमले, लचीली प्यादा संरचना, रोमांचक सामरिक संभावनाएं।"
+            },
+            {
+                title: "English Opening",
+                moves: "1. c4",
+                type: "Flank Opening",
+                idea: "A flexible and strategic opening focusing on queenside development and central influence.",
+                benefits: "Avoids direct theoretical lines, leads to rich positional games, good for players who prefer less sharp, more strategic play.",
+                titleHi: "इंग्लिश ओपनिंग",
+                typeHi: "फ्लैंक ओपनिंग",
+                ideaHi: "क्वीनसाइड विकास और केंद्रीय प्रभाव पर केंद्रित एक लचीली और रणनीतिक शुरुआत।",
+                benefitsHi: "प्रत्यक्ष सैद्धांतिक रेखाओं से बचता है, समृद्ध स्थितीय खेलों की ओर जाता है, उन खिलाड़ियों के लिए अच्छा है जो कम तीखे, अधिक रणनीतिक खेल पसंद करते हैं।"
+            }
+        ];
+
+        let currentLanguage = 'en';
+        let currentQuizQuestionIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadContent();
+            showTab('pieces');
         });
 
-    });
+        function loadContent() {
+            loadPieces();
+            loadOpenings();
+            loadQuizQuestion();
+            updateLanguage();
+        }
 
-</script>
+        // --- Tab Functionality ---
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
 
-</body></html>
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById(`tabBtn${capitalizeFirstLetter(tabId)}`).classList.add('active');
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        // --- Language Toggle ---
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
+            updateLanguage();
+            loadContent(); // Reload content to apply new language
+        }
+
+        function updateLanguage() {
+            const lang = translations[currentLanguage];
+            document.getElementById('mainTitle').textContent = lang.title;
+            document.getElementById('subTitle').textContent = lang.subtitle;
+            document.getElementById('tabBtnPieces').textContent = lang.tabPieces;
+            document.getElementById('tabBtnOpenings').textContent = lang.tabOpenings;
+            document.getElementById('tabBtnQuiz').textContent = lang.tabQuiz;
+            document.getElementById('piecesSectionTitle').textContent = lang.piecesTitle;
+            document.getElementById('openingsSectionTitle').textContent = lang.openingsTitle;
+            document.getElementById('quizSectionTitle').textContent = lang.quizTitle;
+            document.getElementById('openingSearch').placeholder = lang.searchPlaceholder;
+            document.getElementById('startQuizBtn').textContent = lang.startQuizBtn;
+            document.getElementById('restartBtn').textContent = lang.restartQuizBtn;
+            document.getElementById('quizScore').querySelector('span').previousSibling.textContent = lang.scoreText + " ";
+
+            document.getElementById('languageToggle').textContent = currentLanguage === 'en' ? '🌐 हिंदी' : '🌐 English';
+        }
+
+        // --- Load Chess Pieces ---
+        function loadPieces() {
+            const piecesGrid = document.getElementById('piecesGrid');
+            piecesGrid.innerHTML = ''; // Clear existing content
+            const pieces = translations[currentLanguage].pieces;
+
+            for (const key in pieces) {
+                if (pieces.hasOwnProperty(key)) {
+                    const piece = pieces[key];
+                    let symbol = '';
+                    switch(key) {
+                        case 'king': symbol = '♔'; break;
+                        case 'queen': symbol = '♕'; break;
+                        case 'rook': symbol = '♖'; break;
+                        case 'bishop': symbol = '♗'; break;
+                        case 'knight': symbol = '♘'; break;
+                        case 'pawn': symbol = '♙'; break;
+                    }
+
+                    const pieceCard = `
+                        <div class="piece-card">
+                            <div class="piece-header">
+                                <span class="piece-symbol">${symbol}</span>
+                                <h3 class="piece-title">${piece.title}</h3>
+                            </div>
+                            <div class="piece-info">
+                                <p><strong>${currentLanguage === 'en' ? 'Movement' : 'चाल'}:</strong> ${piece.movement}</p>
+                                <p><strong>${currentLanguage === 'en' ? 'Value' : 'मूल्य'}:</strong> ${piece.value}</p>
+                                <p><strong>${currentLanguage === 'en' ? 'Special' : 'विशेष'}:</strong> <span class="highlight">${piece.special}</span></p>
+                                <p><strong>${currentLanguage === 'en' ? 'Strategy' : 'रणनीति'}:</strong> ${piece.strategy}</p>
+                            </div>
+                        </div>
+                    `;
+                    piecesGrid.innerHTML += pieceCard;
+                }
+            }
+        }
+
+        // --- Load Opening Strategies ---
+        function loadOpenings() {
+            const openingsGrid = document.getElementById('openingsGridContent');
+            openingsGrid.innerHTML = ''; // Clear existing content
+
+            openingsData.forEach(opening => {
+                const title = currentLanguage === 'en' ? opening.title : opening.titleHi;
+                const type = currentLanguage === 'en' ? opening.type : opening.typeHi;
+                const idea = currentLanguage === 'en' ? opening.idea : opening.ideaHi;
+                const benefits = currentLanguage === 'en' ? opening.benefits : opening.benefitsHi;
+
+                const openingCard = `
+                    <div class="opening-card">
+                        <h3 class="opening-title">${title}</h3>
+                        <div class="opening-moves">
+                            ${opening.moves}
+                        </div>
+                        <div class="opening-description">
+                            <p><strong>${currentLanguage === 'en' ? 'Type' : 'प्रकार'}:</strong> ${type}</p>
+                            <p><strong>${currentLanguage === 'en' ? 'Idea' : 'विचार'}:</strong> ${idea}</p>
+                            <p><strong>${currentLanguage === 'en' ? 'Benefits' : 'लाभ'}:</strong> ${benefits}</p>
+                        </div>
+                    </div>
+                `;
+                openingsGrid.innerHTML += openingCard;
+            });
+        }
+
+        // --- Search/Filter Functionality ---
+        function filterOpenings() {
+            const searchTerm = document.getElementById('openingSearch').value.toLowerCase();
+            const openingCards = document.querySelectorAll('#openingsGridContent .opening-card');
+
+            openingCards.forEach(card => {
+                const title = card.querySelector('.opening-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // --- Quiz Functionality ---
+        function startQuiz() {
+            currentQuizQuestionIndex = 0;
+            score = 0;
+            document.getElementById('quizScore').style.display = 'none';
+            document.getElementById('restartBtn').style.display = 'none';
+            document.getElementById('startQuizBtn').style.display = 'none';
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const quizContent = document.getElementById('quizContent');
+            quizContent.innerHTML = ''; // Clear previous question
+
+            if (currentQuizQuestionIndex < quizQuestions.length) {
+                const questionData = quizQuestions[currentQuizQuestionIndex];
+                const questionText = currentLanguage === 'en' ? questionData.question : questionData.questionHi;
+                const options = currentLanguage === 'en' ? questionData.options : questionData.optionsHi;
+
+                const questionCard = document.createElement('div');
+                questionCard.classList.add('question-card');
+                questionCard.innerHTML = `<div class="question-text">${questionText}</div><div class="quiz-options"></div>`;
+
+                const optionsContainer = questionCard.querySelector('.quiz-options');
+                options.forEach((option, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.classList.add('quiz-option');
+                    optionDiv.textContent = option;
+                    optionDiv.onclick = () => selectOption(optionDiv, index, questionData.correct);
+                    optionsContainer.appendChild(optionDiv);
+                });
+                quizContent.appendChild(questionCard);
+            } else {
+                displayQuizResult();
+            }
+        }
+
+        function selectOption(selectedDiv, selectedIndex, correctIndex) {
+            // Disable further clicks on options for this question
+            const options = selectedDiv.parentNode.children;
+            for (let i = 0; i < options.length; i++) {
+                options[i].onclick = null;
+            }
+
+            selectedDiv.classList.add('selected');
+
+            if (selectedIndex === correctIndex) {
+                selectedDiv.classList.add('correct');
+                score++;
+            } else {
+                selectedDiv.classList.add('incorrect');
+                // Highlight the correct answer
+                options[correctIndex].classList.add('correct');
+            }
+
+            document.getElementById('scoreValue').textContent = score; // Update score immediately
+            document.getElementById('quizScore').style.display = 'block';
+
+            setTimeout(() => {
+                currentQuizQuestionIndex++;
+                loadQuizQuestion();
+            }, 1500); // Move to next question after 1.5 seconds
+        }
+
+        function displayQuizResult() {
+            const quizContent = document.getElementById('quizContent');
+            quizContent.innerHTML = `
+                <div class="question-card" style="text-align: center;">
+                    <h3 class="question-text">${currentLanguage === 'en' ? 'Quiz Completed!' : 'प्रश्नोत्तरी पूर्ण हुई!'}</h3>
+                    <p style="font-size: 1.5em; color: white;">${currentLanguage === 'en' ? 'Your final score is:' : 'आपका अंतिम स्कोर है:'} <span id="finalScoreValue">${score}/${quizQuestions.length}</span></p>
+                </div>
+            `;
+            document.getElementById('restartBtn').style.display = 'block';
+            document.getElementById('quizScore').style.display = 'block'; // Ensure score is visible
+            document.getElementById('scoreValue').textContent = score; // Final score update
+        }
+
+        function restartQuiz() {
+            currentQuizQuestionIndex = 0;
+            score = 0;
+            document.getElementById('quizScore').style.display = 'none';
+            document.getElementById('restartBtn').style.display = 'none';
+            document.getElementById('startQuizBtn').style.display = 'block';
+            document.getElementById('quizContent').innerHTML = ''; // Clear previous result
+        }
+
+    </script>
+</body>
+</html>
